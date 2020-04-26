@@ -41,6 +41,7 @@ draw = 0
 
 for i in range(10000):
   # TODO: need to switch who gets to play first
+  
   winner = play(p1, p2)
   if winner == -1:
     draw += 1
