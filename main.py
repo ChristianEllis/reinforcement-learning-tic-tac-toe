@@ -38,15 +38,17 @@ def train_agent(iterations):
         p2_wins = 0
         draw = 0
 
-      p1.end_of_episode()
+      p1.end_of_episode(winner)
       iterator += 1
-
+      
+    print('Saving policy')
     p1.dump_policy_to_csv('p1_policy.csv')
-  except:
+  except Exception as e:
+    print(str(e))
     print("Program crashed - saving policy...")
     p1.dump_policy_to_csv('p1_policy.csv')
 
-def play_against_agent(player_num, filename):
+def human_against_agent(player_num, filename):
   play = True
   while play == True:
     # Assign players
@@ -66,5 +68,5 @@ def play_against_agent(player_num, filename):
       return
 
 if __name__ == "__main__":
-  # train_agent(int(1e3))
-  play_against_agent(1, 'p1_policy.csv')
+  train_agent(int(1e6))
+  # human_against_agent(1, 'p1_policy.csv')
