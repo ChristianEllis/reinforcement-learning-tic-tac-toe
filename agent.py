@@ -1,5 +1,6 @@
 # Imports
 import random
+import pandas as pd
 
 # Custom Imports
 from board_state import State
@@ -16,7 +17,7 @@ policy = {
 '''
 
 class Agent(object):
-  def __init__(self, player_num, loss_val, epsilon, alpha, is_learner):
+  def __init__(self, player_num, loss_val, epsilon, alpha, is_learner, policy_filename = None):
     self.player = player_num
     self.loss_val = loss_val
     self.epsilon = epsilon
@@ -26,6 +27,9 @@ class Agent(object):
     self.policy = {}
     self.prev_state_hash_key = None
     self.prev_score = None
+
+    if policy_filename is not None:
+      self.read_policy_from_csv(policy_filename)
 
   def chose_action(self, state_hash_key):
     self.prev_state_hash_key = state_hash_key
@@ -101,3 +105,18 @@ class Agent(object):
     self.prev_state_hash_key = None
     self.prev_score = 0
 
+  def dump_policy_to_csv(self, filename):
+    pd.DataFrame.from_dict(data = self.policy, orient = 'index').to_csv(filename, header = False)
+    return
+
+  def read_policy_from_csv(self, filename):
+    policy = {}
+    f = open(filename)
+    for line in f:
+      line = line.strip('\n')
+      line_data = line.split(',')
+      key = line_data[0]
+      value = float(line_data[1])
+      policy[key] = value
+      
+    self.policy = policy

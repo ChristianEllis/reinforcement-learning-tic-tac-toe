@@ -25,30 +25,29 @@ def play(agent_1, agent_2):
       break
   return result
 
-p1 = Agent(1, -1, 0.1, 0.1, True)
-p2 = p1
-# p2 = Agent(1, -1, 0.1, 0.1, True)
+if __name__ == "__main__":
+  p1 = Agent(1, -1, 0.1, 0.1, True, 'p1_policy.csv')
+  p2 = p1
+  # p2 = Agent(1, -1, 0.1, 0.1, True)
 
-series = ['Winner']
+  series = ['Winner']
+  f = open('results.csv', 'w')
+  writer = csv.writer(f)
+  writer.writerow(series)
 
-f = open('results.csv', 'w')
-writer = csv.writer(f)
-writer.writerow(series)
+  p1_wins = 0
+  p2_wins = 0
+  draw = 0
+  for i in range(1e9):
+    winner = play(p1, p2)
+    if winner == -1:
+      draw += 1
+    elif winner  == 1:
+      p1_wins += 1
+    elif winner == 2:
+      p2_wins += 1
 
-p1_wins = 0
-p2_wins = 0
-draw = 0
+    p1.end_of_episode()
+    writer.writerow([str(winner)])
 
-for i in range(10000):
-  # TODO: need to switch who gets to play first
-  
-  winner = play(p1, p2)
-  if winner == -1:
-    draw += 1
-  elif winner  == 1:
-    p1_wins += 1
-  elif winner == 2:
-    p2_wins += 1
-
-  p1.end_of_episode()
-  writer.writerow([str(winner)])
+  p1.dump_policy_to_csv('p1_policy.csv')
