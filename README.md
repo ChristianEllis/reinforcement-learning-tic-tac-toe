@@ -13,5 +13,5 @@ This program was designed using OOP principles. A description of files is below.
 - human.py (class) - helper class so that a player may interact with the game.
 - game.py (static class) - play the game, determines if a game is over, and prints board state to the console.
 
-## Citing and extending this work
+## Citing and Extending This Work
 See LICENSE, if used for academic purposes, please cite this repository. Forks, & merge-requests are encouraged.
