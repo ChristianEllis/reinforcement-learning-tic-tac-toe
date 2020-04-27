@@ -101,7 +101,7 @@ class Agent(object):
   def add_state_hash_value_pair_to_policy(self, key, value):
     self.policy[key] = value
 
-  def end_of_episode(self):
+  def end_of_episode(self, winner, board_state_hash = None):
     self.prev_state_hash_key = None
     self.prev_score = 0
 

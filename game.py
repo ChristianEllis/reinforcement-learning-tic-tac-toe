@@ -17,7 +17,7 @@ class TicTacToe(object):
   MARKERS = [' ', 'X', 'O']
 
   @staticmethod
-  def play(agent_1, agent_2):
+  def play(player_1, player_2):
     board_state = State()
     board_state_hash = board_state.get_curr_state_hash_str()
     player = None
@@ -25,18 +25,18 @@ class TicTacToe(object):
     for i in range(9): # 9 moves per game
       if i % 2 == 0:
         player = 1
-        move = agent_1.chose_action(board_state_hash)
+        move = player_1.chose_action(board_state_hash)
       else:
         player = 2
-        move = agent_2.chose_action(board_state_hash)
-      
-      board_state.set_state(player, move)  #update state
+        move = player_2.chose_action(board_state_hash)
+
+      board_state.set_state(player, move) #update state
       board_state_hash = board_state.get_curr_state_hash_str()
       result = TicTacToe.is_game_over(board_state_hash)
       
       if result != 0:
         break
-    return result
+    return (result, board_state_hash)
 
   @staticmethod
   def is_game_over(state_hash_key):
