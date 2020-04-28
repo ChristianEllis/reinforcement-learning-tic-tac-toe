@@ -1,6 +1,7 @@
 # Imports
 import random
 import pandas as pd
+import numpy as np
 
 # Custom Imports
 from board_state import State
@@ -63,7 +64,7 @@ class Agent(TicTacToe):
     for i in range(3):
       for j in range(3):
         if state[i][j] == 0:
-          possible_state = state
+          possible_state = np.copy(state)
           possible_state[i][j] = self.player
           possible_state_hash_key = State.state_to_hash(possible_state) #convert state to a hash
           val = self.lookup_score_in_policy(possible_state_hash_key)
@@ -73,20 +74,20 @@ class Agent(TicTacToe):
             best_move = (i, j)
     return (best_move, best_val)
 
-  def temporal_difference(self, new_best_val):
-    if self.prev_state_hash_key != None and self.is_learner:
-      new_value = self.alpha * (self.gamma * new_best_val - self.prev_score)
+  def temporal_difference(self, new_best_val, reward = 0):
+    if (self.prev_state_hash_key is not None) and (self.is_learner):
+      new_value = self.alpha * (reward + self.gamma * new_best_val - self.prev_score)
       self.policy[self.prev_state_hash_key] += new_value
 
   def lookup_score_in_policy(self, state_hash_key):
-    if not state_hash_key in self.policy:
-      value = self.get_value_of_state(state_hash_key)# calclate value
+    if state_hash_key not in self.policy:
+      value = self.get_value_of_state(state_hash_key) # calclate value
       self.add_state_hash_value_pair_to_policy(state_hash_key, value)
     return self.policy[state_hash_key]
   
   def get_value_of_state(self, state_hash_key):
     overall_game_state = TicTacToe.is_game_over(state_hash_key) # Determine if there is a winner or not
-    value = self.calc_value(overall_game_state)# Determine value of state based on win, loss, draw, or none
+    value = self.calc_value(overall_game_state) # Determine value of state based on win, loss, draw, or none
 
     return value
 
@@ -94,7 +95,7 @@ class Agent(TicTacToe):
     if overall_game_state == self.player: # Winner
       return 1
     elif overall_game_state == 0: # No winner yet
-      return 0.5 # never seen this state before - give it an initial value of 0.5
+      return 0.2 # never seen this state before - give it an initial value of 0.5
     elif overall_game_state == -1: # Draw
       return 0
     else: # Loser
@@ -103,9 +104,9 @@ class Agent(TicTacToe):
   def add_state_hash_value_pair_to_policy(self, key, value):
     self.policy[key] = value
 
-  def end_of_episode(self, winner, state_hash_key = None):
+  def end_of_episode(self, reward, state_hash_key = None):
     move, best_val = self.exploit(state_hash_key)
-    self.temporal_difference(best_val)
+    self.temporal_difference(best_val, reward)
 
     self.prev_state_hash_key = None
     self.prev_score = 0
@@ -123,5 +124,4 @@ class Agent(TicTacToe):
       key = line_data[0]
       value = float(line_data[1])
       policy[key] = value
-      
     self.policy = policy

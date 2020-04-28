@@ -12,13 +12,14 @@ def train_agent(iterations):
   try:
     p1 = Agent(
       1, # Player #
-      -1, # Loss Value
-      0.1, # Epsilon (exploration rate)
-      0.1, # Alpha (learning rate)
+      -10, # Loss Value
+      0.2, # Epsilon (exploration rate)
+      0.2, # Alpha (learning rate)
       0.9, # Gamma (make infinite sum finite) - https://stats.stackexchange.com/questions/221402/understanding-the-role-of-the-discount-factor-in-reinforcement-learning
       True, # Update learner
     )
-    p2 = Agent(1, -1, 0.1, 0.1, 0.9, True)
+    # p2 = p1
+    p2 = Agent(2, -1, 1, 0.1, 0.9, False) # Random Agent
 
     series = ['P1_Wins', 'P2_Wins', 'Draw']
     f = open('results.csv', 'w')
@@ -86,5 +87,5 @@ def human_against_agent(player_num, filename):
       return
 
 if __name__ == "__main__":
-  # train_agent(int(3e5))
+  # train_agent(int(1e5))
   human_against_agent(2, 'p1_policy.csv')

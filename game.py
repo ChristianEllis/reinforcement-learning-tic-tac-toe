@@ -35,8 +35,15 @@ class TicTacToe(object):
 
       if result != 0:
         # game is over
-        player_1.end_of_episode(result, board_state_hash)
-        player_2.end_of_episode(result, board_state_hash)
+        if result == 1: # p1 win
+          player_1.end_of_episode(1, board_state_hash)
+          player_2.end_of_episode(-1, board_state_hash)
+        if result == 2: # p2 win
+          player_1.end_of_episode(-1, board_state_hash)
+          player_2.end_of_episode(1, board_state_hash)
+        if result == -1: #draw
+          player_1.end_of_episode(0, board_state_hash)
+          player_2.end_of_episode(0, board_state_hash)
         break
     return (result, board_state_hash)
 
