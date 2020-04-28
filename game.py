@@ -20,7 +20,6 @@ class TicTacToe(object):
   def play(player_1, player_2):
     board_state = State()
     board_state_hash = board_state.get_curr_state_hash_str()
-    player = None
     
     for i in range(9): # 9 moves per game
       if i % 2 == 0:
@@ -33,8 +32,11 @@ class TicTacToe(object):
       board_state.set_state(player, move) #update state
       board_state_hash = board_state.get_curr_state_hash_str()
       result = TicTacToe.is_game_over(board_state_hash)
-      
+
       if result != 0:
+        # game is over
+        player_1.end_of_episode(result, board_state_hash)
+        player_2.end_of_episode(result, board_state_hash)
         break
     return (result, board_state_hash)
 
