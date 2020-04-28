@@ -14,7 +14,7 @@ This program was designed using OOP principles. A description of files is below.
 - game.py (static class) - play the game, determines if a game is over, and prints board state to the console.
 
 ## Extending This Work
-Right now, an agent learns solely through value iteration. In order to acheive an optimal policy the agent must have been in each state multiple times. Although the state space of tic tac toe is relitively small compared to other games, through my experience this approx 20 million of iterations of an agent playing against its own policy. Other approaches such as q-learning, DNN's and even non RL approaches are encouraged, such as game theory or evolutionary approaches. Forks, & merge-requests are encouraged.
+Right now, an agent learns through [TD(0) learning](https://en.wikipedia.org/wiki/Temporal_difference_learning) and value iteration. In order to acheive an optimal policy the agent must have been in each state multiple times. Although the state space of tic tac toe is relitively small compared to other games, through my experience this approx 200k iterations to train an optimal agent. Other approaches such as q-learning, DNN's and even non RL approaches are encouraged, such as game theory or evolutionary approaches. Forks, & merge-requests are encouraged.
 
 ## Citing This Work
 See LICENSE, if used for academic purposes, please cite this repository.
