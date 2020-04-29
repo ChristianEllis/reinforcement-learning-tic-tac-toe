@@ -72,6 +72,8 @@ class Agent(TicTacToe):
           if val > best_val:
             best_val = val
             best_move = (i, j)
+          # what if values are the same?
+
     return (best_move, best_val)
 
   def temporal_difference(self, new_best_val, reward = 0):
@@ -95,7 +97,7 @@ class Agent(TicTacToe):
     if overall_game_state == self.player: # Winner
       return 1
     elif overall_game_state == 0: # No winner yet
-      return 0.2 # never seen this state before - give it an initial value of 0.5
+      return 0.2 # never seen this state before - give it an initial value of 0.2
     elif overall_game_state == -1: # Draw
       return 0
     else: # Loser

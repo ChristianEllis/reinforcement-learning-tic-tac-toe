@@ -87,5 +87,5 @@ def human_against_agent(player_num, filename):
       return
 
 if __name__ == "__main__":
-  # train_agent(int(1e5))
+  # train_agent(int(1e6))
   human_against_agent(2, 'p1_policy.csv')
