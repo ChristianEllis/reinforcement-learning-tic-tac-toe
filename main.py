@@ -18,8 +18,8 @@ def train_agent(iterations):
       0.9, # Gamma (make infinite sum finite) - https://stats.stackexchange.com/questions/221402/understanding-the-role-of-the-discount-factor-in-reinforcement-learning
       True, # Update learner
     )
-    # p2 = p1
-    p2 = Agent(2, -1, 1, 0.1, 0.9, False) # Random Agent
+    p2 = p1
+    # p2 = Agent(2, -1, 1, 0.1, 0.9, False) # Random Agent
 
     series = ['P1_Wins', 'P2_Wins', 'Draw']
     f = open('results.csv', 'w')
